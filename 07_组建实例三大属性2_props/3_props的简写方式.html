@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>props的简写方式</title>
+</head>
+<body>
+  <div id="app"></div>
+  <div id="app1"></div>
+  <script type="text/javascript" src="../js/react.development.js"></script>
+  <script type="text/javascript" src="../js/react-dom.development.js"></script>
+  <script type="text/javascript" src="../js/prop-types.js"></script>
+  <script type="text/javascript" src="../js/babel.min.js"></script>
+  <script type="text/babel">
+    // 创建组建
+    class Person extends React.Component{
+      render() {
+        const { name, age, sex } = this.props
+        return (
+          <ul>
+            <li>姓名: {name}</li>
+            <li>年龄: {age+1}</li>
+            <li>性别: {sex}</li>
+          </ul>
+        )
+      }
+      // 对标签属性进行类型、必要性限制
+      static propTypes = {
+        name: PropTypes.string.isRequired,
+        sex: PropTypes.string,
+        age: PropTypes.number,
+        speak: PropTypes.func,
+      }
+      // 指定默认的标签属性值
+      static defaultProps = {
+        sex: '不男不女',
+        age: 17,
+      }
+      // a = 1
+      // static b = 2
+    }
+
+    // 渲染组建到页面
+    let wang = {name:'tim', age:30, sex:'男'}
+    ReactDOM.render(<Person {...wang}/>, document.getElementById('app'))
+    ReactDOM.render(<Person name="张三" speak={speak}/>, document.getElementById('app1'))
+
+    function speak() {
+      console.log('speak');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>props的基本使用</title>
+</head>
+<body>
+  <div id="app"></div>
+  <div id="app1"></div>
+  <script type="text/javascript" src="../js/react.development.js"></script>
+  <script type="text/javascript" src="../js/react-dom.development.js"></script>
+  <script type="text/javascript" src="../js/babel.min.js"></script>
+  <script type="text/babel">
+    // 创建组建
+    class Person extends React.Component{
+      render() {
+        console.log(this);
+        const { name, age, sex } = this.props
+        return (
+          <ul>
+            <li>姓名: {name}</li>
+            <li>年龄: {age}</li>
+            <li>性别: {sex}</li>
+          </ul>
+        )
+      }
+    }
+
+    // 渲染组建到页面
+    ReactDOM.render(<Person name="zhangsan" age="23" sex="男" />, document.getElementById('app'))
+    let wang = {name:'wang',age:30,sex:'男'}
+    ReactDOM.render(<Person {...wang}/>, document.getElementById('app1'))
+  </script>
+</body>
+</html>

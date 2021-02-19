@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>函数组件使用props</title>
+</head>
+<body>
+  <div id="app"></div>
+  <script type="text/javascript" src="../js/react.development.js"></script>
+  <script type="text/javascript" src="../js/react-dom.development.js"></script>
+  <script type="text/javascript" src="../js/prop-types.js"></script>
+  <script type="text/javascript" src="../js/babel.min.js"></script>
+  <script type="text/babel">
+    function Person(props) {
+      console.log(props);
+      const { name, age, sex } = props
+      return (
+          <ul>
+            <li>姓名: {name}</li>
+            <li>年龄: {age+1}</li>
+            <li>性别: {sex}</li>
+          </ul>
+        )
+    }
+
+    Person.propTypes = {
+      name: PropTypes.string.isRequired,
+      age: PropTypes.number,
+      sex: PropTypes.string,
+    }
+
+    Person.defaultProps = {
+      sex: '中性',
+      age: 20,
+    }
+
+    // 渲染组建到页面
+    // let wang = {name:'tim', age:30, sex:'男'}
+    let wang = {name:'tim', age:30,}
+    ReactDOM.render(<Person {...wang}/>, document.getElementById('app'))
+  </script>
+</body>
+</html>
