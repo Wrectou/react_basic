@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>高阶函数_函数柯里化</title>
+  <title>1_高阶函数_函数柯里化</title>
 </head>
 <body>
   <div id="app"></div>
@@ -19,9 +19,16 @@
         常见的高阶函数有：Promise，setTimeout，arr.map()等。
       
       函数的柯里化：通过函数调用继续返回函数的方式，实现多次接收参数最后统一处理的函数编码形式。
+      function sum(a) {
+        return (b) => {
+          return (c) => {
+            return a + b + c
+          }
+        }
+      }
     */
     // #endregion
-    
+
     class Login extends React.Component{
       state = {
         username: '',
