@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1_字符串形式的ref</title>
+</head>
+<body>
+  <div id="app"></div>
+  <script type="text/javascript" src="../js/react.development.js"></script>
+  <script type="text/javascript" src="../js/react-dom.development.js"></script>
+  <script type="text/javascript" src="../js/babel.min.js"></script>
+  <script type="text/babel">
+    class Form extends React.Component{
+
+      handleBtnClick = () => {
+        const input1 = this.refs.input1
+        alert(input1.value)
+      }
+
+      handleInputBlur = () => {
+        const input2 = this.refs.input2
+        alert(input2.value)
+      }
+
+      render() {
+        return(
+          <div>
+            <input ref="input1" type="text" placeholder="点击按钮提示数据"/>
+            <button onClick={this.handleBtnClick}>点击提示左侧数据</button>
+            <input ref="input2" onBlur={this.handleInputBlur} type="text" placeholder="失去焦点提示数据"/>
+          </div>
+        )
+      }
+    }
+    ReactDOM.render(<Form/>, document.getElementById('app'))
+  </script>
+</body>
+</html>
