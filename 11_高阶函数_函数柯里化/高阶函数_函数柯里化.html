@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>高阶函数_函数柯里化</title>
+</head>
+<body>
+  <div id="app"></div>
+  <script type="text/javascript" src="../js/react.development.js"></script>
+  <script type="text/javascript" src="../js/react-dom.development.js"></script>
+  <script type="text/javascript" src="../js/babel.min.js"></script>
+  <script type="text/babel">
+    // #region
+    /*
+      高阶函数：如果一个函数符合下面2个规范中的任何一个，那该函数就是高阶函数。
+        1、若A函数，接收的参数是一个函数，那么A就可以称为高阶函数。
+        2、若A函数，调用的返回值依然是一个函数，那么A就可以称为高阶函数。
+        常见的高阶函数有：Promise，setTimeout，arr.map()等。
+      
+      函数的柯里化：通过函数调用继续返回函数的方式，实现多次接收参数最后统一处理的函数编码形式。
+    */
+    // #endregion
+    
+    class Login extends React.Component{
+      state = {
+        username: '',
+        password: '',
+      }
+
+      saveFormdata = (dataName) => {
+        return (e) => {
+          this.setState({ [dataName]: e.target.value })
+        }
+      }
+
+      handleSubmit = (e) => {
+        e.preventDefault()
+        const { username, password } = this.state
+        alert(`你的用户名是${username}，密码是${password}`)
+      }
+
+      render() {
+        return(
+          <form onSubmit={this.handleSubmit} action="http://127.0.0.1:5500/09_react%E4%B8%AD%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86/%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86.html">
+            用户名：<input onChange={this.saveFormdata('username')} type="text" name="username" id=""/>
+            密码：<input onChange={this.saveFormdata('password')} type="password" name="password" id=""/>
+            <button>登录</button>
+          </form>
+        )
+      }
+    }
+    ReactDOM.render(<Login/>, document.getElementById('app'))
+
+
+
+    // 根据DOM的 target 来取值 name value   -----------------------------------
+    // class Login extends React.Component{
+    //   state = {
+    //     username: '',
+    //     password: '',
+    //   }
+    //   saveFormdata = (e) => {
+    //     const { name, value } = e.target
+    //     this.setState({ [name]: value })
+    //   }
+    //   handleSubmit = (e) => {
+    //     e.preventDefault()
+    //     const { username, password } = this.state
+    //     alert(`你的用户名是${username}，密码是${password}`)
+    //   }
+    //   render() {
+    //     return(
+    //       <form onSubmit={this.handleSubmit} action="http://127.0.0.1:5500/09_react%E4%B8%AD%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86/%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86.html">
+    //         用户名：<input onChange={this.saveFormdata} type="text" name="username" id=""/>
+    //         密码：<input onChange={this.saveFormdata} type="password" name="password" id=""/>
+    //         <button>登录</button>
+    //       </form>
+    //     )
+    //   }
+    // }
+    // ReactDOM.render(<Login/>, document.getElementById('app'))
+  </script>
+</body>
+</html>
