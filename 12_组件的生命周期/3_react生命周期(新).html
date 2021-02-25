@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3_react生命周期(新)</title>
+</head>
+<body>
+  <div id="app"></div>
+  <script type="text/javascript" src="../js/17.0.1/react.development.js"></script>
+  <script type="text/javascript" src="../js/17.0.1/react-dom.development.js"></script>
+  <script type="text/javascript" src="../js/17.0.1/babel.min.js"></script>
+  <script type="text/babel">
+    class Count extends React.Component{
+
+      constructor(props) {    // 构造器
+        console.log('Count---constructor');
+        super(props)
+        this.state = { count: 0 }
+      }
+
+      componentWillMount() {    // 组件将要挂载钩子
+        console.log('Count---componentWillMount');
+      }
+
+      componentDidMount() {     // 组件挂载完毕钩子
+        console.log('Count---componentDidMount');
+      }
+
+      shouldComponentUpdate() {     // 控制组件是否更新的“阀门”
+        console.log('Count---shouldComponentUpdate');
+        return false
+      }
+
+      componentWillUpdate() {     // 组件将要更新钩子
+        console.log('Count---componentWillUpdate');
+      }
+
+      componentDidUpdate() {      // 组件更新完毕钩子
+        console.log('Count---componentDidUpdate');
+      }
+
+      componentWillUnmount() {    // 组件将要卸载钩子
+        console.log('Count---componentWillUnmount');
+      }
+
+      add = () => {
+        let { count } = this.state
+        count += 1
+        this.setState({ count })
+      }
+
+      death = () => {
+        ReactDOM.unmountComponentAtNode(document.getElementById('app'))
+      }
+
+      force = () => {
+        this.forceUpdate()
+      }
+
+      render() {    // 初始化 / 状态更新  钩子
+        console.log('Count---render');
+        const { count } = this.state
+        return(
+          <div>
+            <h2>当前求和为{count}</h2>
+            <button onClick={this.add}>点我+1</button>
+            <br/>
+            <br/>
+            <button onClick={this.death}>卸载组件</button>
+            <br/>
+            <br/>
+            <button onClick={this.force}>不更改任何状态中的数据，强制更新一下</button>
+          </div>
+        )
+      }
+    }
+
+
+
+    class A extends React.Component{
+
+      state = { carName: '马自达' }
+
+      changeCar = () => {
+        this.setState({ carName: '宝马' })
+      }
+
+      UNSAFE_componentWillMount() {      // 组件即将挂载钩子
+        console.log('A---componentWillMount');
+      }
+
+      componentDidMount() {     // 组件挂载完毕钩子
+        console.log('A---componentDidMount');
+      }
+
+      shouldComponentUpdate() {     // 控制组件是否更新的“阀门”
+        console.log('A---shouldComponentUpdate');
+        return true
+      }
+
+      UNSAFE_componentWillUpdate() {     // 组件即将更新钩子
+        console.log('A---componentWillUpdate');
+      }
+
+      componentDidUpdate() {      // 组件完成更新钩子
+        console.log('A---componentDidUpdate');
+      }
+
+      render() {
+        console.log('A---render');      // 初始化 / 状态更新 钩子
+        const { carName } = this.state
+        return(
+          <div>
+            <p>父组件A</p>
+            <button onClick={this.changeCar}>更换车子</button>
+            <B carName={carName}/>
+          </div>
+        )
+      }
+    }
+
+    class B extends React.Component{
+
+      UNSAFE_componentWillMount() {    // 组件即将挂载钩子
+        console.log('B---componentWillMount');
+      }
+
+      componentDidMount() {       // 组件挂载完毕钩子
+        console.log('B---componentDidMount');
+      }
+
+      UNSAFE_componentWillReceiveProps() {   // 组件将要接收新props的钩子
+        console.log('B---componentWillReceiveProps');
+      }
+
+      shouldComponentUpdate() {     // 控制组件是否更新的“阀门”
+        console.log('B---shouldComponentUpdate');
+        return true
+      }
+
+      UNSAFE_componentWillUpdate() {     // 组件即将更新钩子
+        console.log('B---componentWillUpdate');
+      }
+
+      componentDidUpdate() {     // 组件更新完毕钩子
+        console.log('B---componentDidUpdate');
+      }
+
+      render() {
+        console.log('B---render');     // 初始化 / 状态更新 钩子
+        const { carName } = this.props
+        return(
+          <div>
+            <p>子组件B</p>
+            <p>传来车子的品牌是：{carName}</p>
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(<A/>, document.getElementById('app'))
+  </script>
+</body>
+</html>

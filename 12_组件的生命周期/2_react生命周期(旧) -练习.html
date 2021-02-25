@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2_react生命周期(旧) -练习</title>
+</head>
+<body>
+  <div id="app"></div>
+  <script type="text/javascript" src="../js/react.development.js"></script>
+  <script type="text/javascript" src="../js/react-dom.development.js"></script>
+  <script type="text/javascript" src="../js/babel.min.js"></script>
+  <script type="text/babel">
+    class A extends React.Component{
+      state = { carName: 'Mazda' }
+
+      changeCar = () => {
+        const { carName } = this.state
+        this.setState({ carName: 'BMW'})
+      }
+
+      force = () => {
+        this.forceUpdate()
+      }
+
+      death = () => {
+        ReactDOM.unmountComponentAtNode(document.getElementById('app'))
+      }
+
+      componentWillMount() {
+        console.log('A---componentWillMount');
+      }
+
+      componentDidMount() {
+        console.log('A---componentDidMount');
+      }
+
+      shouldComponentUpdate() {
+        console.log('A---shouldComponentUpdate');
+        return true
+      }
+
+      componentWillUpdate() {
+        console.log('A---componentWillUpdate');
+      }
+
+      componentDidUpdate() {
+        console.log('A---componentDidUpdate');
+      }
+
+      componentWillUnmount() {
+        console.log('A---componentWillUnmount');
+      }
+
+      render() {
+        console.log('A---render');
+        const { carName } = this.state
+        return(
+          <div>
+            <p>A组件</p>
+            <button onClick={this.changeCar}>更换车子</button>
+            <br/><br/>
+            <button onClick={this.force}>A组件强制更新，不改变数据</button>
+            <br/><br/>
+            <button onClick={this.death}>卸载A组件</button>
+            <B carName={carName} />
+          </div>
+        )
+      }
+    }
+
+    class B extends React.Component{
+
+      state = { weather: '晴天' }
+
+      changeWeather = () => {
+        this.setState({ weather: '阴天' })
+      }
+
+      force = () => {
+        this.forceUpdate()
+      }
+
+      death = () => {
+        ReactDOM.unmountComponentAtNode(document.getElementById('app'))
+      }
+
+      componentWillMount() {     // 组件将要挂载钩子
+        console.log('B---componentWillMount');
+      }
+
+      componentDidMount() {     // 组件挂载完毕钩子
+        console.log('B---componentDidMount');
+      }
+
+      componentWillReceiveProps(props) {      // 组件将要接收新的props钩子
+        console.log('B---componentWillReceiveProps', props);
+      }
+
+      shouldComponentUpdate() {     // 控制组件是否更新“阀门”
+        console.log('B---shouldComponentUpdate');
+        return true
+      }
+
+      componentWillUpdate() {     // 组件将要更新钩子
+        console.log('B---componentWillUpdate');
+      }
+
+      componentDidUpdate() {      // 组件更新完成钩子
+        console.log('B---componentDidUpdate');
+      }
+
+      componentWillUnmount() {      // 组件将要卸载钩子
+        console.log('B---componentWillUnmount');
+      }
+
+      render() {
+        console.log('B---render');
+        const { carName } = this.props
+        const { weather } = this.state
+        return(
+          <div>
+            <p>B组件</p>
+            <p>收到A组件传来的汽车名称是：{carName}</p>
+            <p>B组件天气是：{weather}</p>
+            <button onClick={this.changeWeather}>更改天气</button>
+            <br/><br/>
+            <button onClick={this.force}>A组件强制更新，不改变数据</button>
+            <br/><br/>
+            <button onClick={this.death}>卸载B组件</button>
+          </div>
+        )
+      }
+    }
+    ReactDOM.render(<A/>, document.getElementById('app'))
+  </script>
+</body>
+</html>
